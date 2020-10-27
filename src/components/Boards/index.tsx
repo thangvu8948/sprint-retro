@@ -1,10 +1,11 @@
 import { METHODS } from "http";
 import { cpuUsage } from "process";
 import React, { useEffect, useState } from "react";
-import { Form, FormControl } from "react-bootstrap";
+import { Form, FormControl, Spinner } from "react-bootstrap";
 import { Button, CardDeck, Col, Container, Modal, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
+import { apiAddress } from "../../app.const";
 import { IBoard } from "../../interfaces/IBoard";
 import NewBoardPopup from "../Popups/NewBoardPopups";
 import BoardCard from "./BoardItems/BoardCard";
@@ -22,7 +23,7 @@ export const Board = () => {
 
   async function fetchBoards() {
     setIsLoading(true);
-    const res = await fetch("http://localhost:3000/boards");
+    const res = await fetch(`${apiAddress}/boards`);
     console.log(res);
     res
       .json()
@@ -47,11 +48,20 @@ export const Board = () => {
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
       >
-        <NewBoardPopup {...{func: AddBoardHandler}} />
+        <NewBoardPopup {...{ func: AddBoardHandler }} />
       </Modal>
 
       {boards.length === 0 ? (
-        <div>Loading</div>
+        <div
+          style={{
+            margin: "5%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Spinner animation="border" role="status" />
+        </div>
       ) : (
         <Container>
           <div className="board-type">Your Boards</div>
@@ -61,12 +71,12 @@ export const Board = () => {
               <BoardCard {...board} />
             ))}
           </Row>
-          <div className="board-type">Join Boards</div>
+          {/* <div className="board-type">Join Boards</div>
           <Row className="my-auto">
             {boards.map((board, index) => (
               <BoardCard {...board} />
             ))}
-          </Row>
+          </Row> */}
         </Container>
       )}
     </>

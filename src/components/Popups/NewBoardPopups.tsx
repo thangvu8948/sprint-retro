@@ -1,5 +1,6 @@
 import React, { EventHandler, useCallback, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { apiAddress } from "../../app.const";
 
 export const NewBoardPopup = (par: {func: Function}) => {
   const [text, setText] = useState("");
@@ -11,7 +12,7 @@ export const NewBoardPopup = (par: {func: Function}) => {
   };
 
   const add = useCallback(async (nameBoard: string) => {
-    await fetch("http://localhost:3000/boards", {
+    await fetch(`${apiAddress}/boards`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
