@@ -1,0 +1,66 @@
+.customCard {
+  max-width: 10rem;
+  min-width: 10rem;
+  min-height: 6rem;
+  max-height: 6rem;
+
+  padding: 1%;
+  margin: 1%;
+  font-size: small;
+}
+
+
+
+.col {
+  flex-grow: 0;
+}
+.card-title {
+  font-size: medium;
+}
+
+.new-board-button {
+    cursor:pointer;
+}
+
+.customCard > img {
+    width: 30px;
+    height: 30px;
+    margin: auto;
+}
+.board-type {
+    margin: 1%;
+}
+
+@media screen and (max-width: 360px) {
+  .customCard {
+    max-width: 9rem;
+    min-width: 9rem;
+    min-height: 6rem;
+    max-height: 6rem;
+
+    padding: 1rem;
+    margin: 1%;
+    font-size: small;
+  }
+
+  .row {
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 320px) {
+    .customCard {
+      max-width: 100%;
+      min-width: 100%;
+      min-height: 6rem;
+      max-height: 6rem;
+  
+      padding: 1rem;
+      margin: 1%;
+      font-size: small;
+    }
+
+    .row {
+        margin: auto;
+      }
+  }
