@@ -1,6 +1,8 @@
 import React, { EventHandler, useCallback, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { apiAddress } from "../../app.const";
+import { API_URL } from "../../app.const";
+import authServcice from "../../Services/auth.servcice";
+
 
 export const NewBoardPopup = (par: {func: Function}) => {
   const [text, setText] = useState("");
@@ -11,12 +13,15 @@ export const NewBoardPopup = (par: {func: Function}) => {
     add(text);
   };
 
+  const user = authServcice.getCurrentUser();
+
   const add = useCallback(async (nameBoard: string) => {
-    await fetch(`${apiAddress}/boards`, {
+    await fetch(`${API_URL}/boards`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
+        "Authorization":user.token
       },
       body: JSON.stringify({ "name": nameBoard }),
     }).then(response => par.func(false));

@@ -5,8 +5,9 @@ import { Form, FormControl, Spinner } from "react-bootstrap";
 import { Button, CardDeck, Col, Container, Modal, Row } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
-import { apiAddress } from "../../app.const";
+import { API_URL } from "../../app.const";
 import { IBoard } from "../../interfaces/IBoard";
+import authServcice from "../../Services/auth.servcice";
 import NewBoardPopup from "../Popups/NewBoardPopups";
 import BoardCard from "./BoardItems/BoardCard";
 import NewBoardCard from "./BoardItems/NewBoardCard";
@@ -16,6 +17,7 @@ export const Board = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
 
+  const user = authServcice.getCurrentUser();
   function AddBoardHandler(isShow: boolean) {
     setShowAdd(isShow);
     fetchBoards();
@@ -23,17 +25,27 @@ export const Board = () => {
 
   async function fetchBoards() {
     setIsLoading(true);
-    const res = await fetch(`${apiAddress}/boards`);
+    console.log("fetching " + `${API_URL}/boards`);
+    const res = await fetch(`${API_URL}/boards`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        Authorization: user.token,
+      }
+    });
     console.log(res);
     res
       .json()
       .then((res) => {
         setBoards(res);
         setIsLoading(false);
-        console.log(boards);
+        console.log(`boards: ${boards}`);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false);
+
       });
   }
 
@@ -51,7 +63,7 @@ export const Board = () => {
         <NewBoardPopup {...{ func: AddBoardHandler }} />
       </Modal>
 
-      {boards.length === 0 ? (
+      {isLoading ? (
         <div
           style={{
             margin: "5%",
