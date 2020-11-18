@@ -19,7 +19,7 @@ const SignUp = () => {
   const [registerd, setRegistered] = useState(false);
   const [dob, setDob] = useState("");
   const [isValidDob, setIsValidDob] = useState(true);
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Male");
   const [isDuplicate, setIsDuplicate] = useState(false);
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target.value;
