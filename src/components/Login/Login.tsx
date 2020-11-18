@@ -4,7 +4,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import authServcice from "../../Services/auth.servcice";
 import { History, LocationState } from "history";
 
-interface HistoryProps {
+export interface HistoryProps {
   history: History<LocationState>;
 }
 
@@ -40,7 +40,8 @@ const Login = (props: HistoryProps) => {
 
     authServcice.login(email, password).then(
       (response) => {
-        console.log(response.token);
+        console.log("res: ", response);
+        console.log("token" ,response.token);
         setLoading(false);
         props.history.push("/");
         window.location.reload();

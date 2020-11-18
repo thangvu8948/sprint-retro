@@ -1,27 +1,26 @@
 import axios from "axios";
+import { API_URL } from "../app.const";
 
-const API_URL = "http://localhost:8000/auth/";
+const api_url = `${API_URL}/auth/`;
 
 const register = (username: string, email: string, password: string) => {
   console.log(username);  
-  return axios.post(API_URL + "signup", JSON.stringify({
+  return axios.post(api_url + "signup", JSON.stringify({
     Name: username,
     Email: email,
     Password: password,
   }), { headers: { 'Content-Type': 'application/json', } });
 };
 
-const login = (email: string, password: string) => {
+const login =  (email: string, password: string) => {
   console.log(email + "  " + password)
   return axios
-    .post(API_URL + "signin", JSON.stringify({
+    .post(api_url + "signin", JSON.stringify({
       Email: email,
       Password: password,
     }), { headers: { 'Content-Type': 'application/json', } })
     .then((response) => {
       if (response.data.token) {
-        console.log(response);
-        console.log("token: " + response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
       }
 
@@ -36,7 +35,6 @@ const logout = () => {
 };
 
 const getCurrentUser = () => {
-  console.log(localStorage.getItem("user"));
   return JSON.parse(localStorage.getItem("user") as string);
 };
 

@@ -8,7 +8,9 @@ import CardGroup from "react-bootstrap/CardGroup";
 import { API_URL } from "../../app.const";
 import { IBoard } from "../../interfaces/IBoard";
 import authServcice from "../../Services/auth.servcice";
+import DeleteBoardPopup from "../Popups/DeleteBoardPopup";
 import NewBoardPopup from "../Popups/NewBoardPopups";
+import RenameBoardPopup from "../Popups/RenameBoardPopup";
 import BoardCard from "./BoardItems/BoardCard";
 import NewBoardCard from "./BoardItems/NewBoardCard";
 
@@ -16,11 +18,29 @@ export const Board = () => {
   const [boards, setBoards] = useState<IBoard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
-
+  const [showDelete, setShowDelete] = useState(false);
+  const [showRename, setShowRename] = useState(false);
+  const [boardWantHandle, setBoardWantHandle] = useState<IBoard>(null);
   const user = authServcice.getCurrentUser();
   function AddBoardHandler(isShow: boolean) {
     setShowAdd(isShow);
-    fetchBoards();
+    if (isShow == false) {
+      fetchBoards();
+    }
+  }
+
+  function DeleteHandler(deleted: boolean) {
+    setShowDelete(false);
+    if (deleted) {
+      fetchBoards();
+    }
+  }
+
+  function RenameHandler(renamed: boolean) {
+    setShowRename(false);
+    if (renamed) {
+      fetchBoards();
+    }
   }
 
   async function fetchBoards() {
@@ -30,9 +50,9 @@ export const Board = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json",
+        Accept: "application/json",
         Authorization: user.token,
-      }
+      },
     });
     console.log(res);
     res
@@ -45,7 +65,6 @@ export const Board = () => {
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
-
       });
   }
 
@@ -63,6 +82,18 @@ export const Board = () => {
         <NewBoardPopup {...{ func: AddBoardHandler }} />
       </Modal>
 
+      <Modal show={showDelete} >
+        <DeleteBoardPopup
+          {...{ board: boardWantHandle, func: DeleteHandler }}
+        />
+      </Modal>
+
+      <Modal show={showRename} aria-labelledby="example-modal-sizes-title-sm">
+        <RenameBoardPopup
+          {...{ board: boardWantHandle, func: RenameHandler }}
+        />
+      </Modal>
+
       {isLoading ? (
         <div
           style={{
@@ -75,12 +106,28 @@ export const Board = () => {
           <Spinner animation="border" role="status" />
         </div>
       ) : (
-        <Container>
-          <div className="board-type">Your Boards</div>
-          <Row className="my-auto">
-            <NewBoardCard {...{ func: AddBoardHandler }} />
+        <Container className="">
+          <div className="board-type h2">Your Boards</div>
+          <Row className="my-auto mx-2">
+            <div className=" col-lg-3 col-md-4 col-sm-6 col-6 mx-0 my-2">
+              <NewBoardCard {...{ func: AddBoardHandler }} />
+            </div>
             {boards.map((board, index) => (
-              <BoardCard {...board} />
+              <div className=" col-lg-3 col-md-4 col-sm-6 col-6 mx-0 my-2">
+                <BoardCard
+                  {...{
+                    board: board,
+                    triggerDelete: () => {
+                      setShowDelete(true);
+                      setBoardWantHandle(board);
+                    },
+                    triggerRename: () => {
+                      setShowRename(true);
+                      setBoardWantHandle(board);
+                    }
+                  }}
+                />
+              </div>
             ))}
           </Row>
           {/* <div className="board-type">Join Boards</div>

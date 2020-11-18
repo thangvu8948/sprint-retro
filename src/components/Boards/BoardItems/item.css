@@ -1,14 +1,11 @@
 .customCard {
-  max-width: 10rem;
-  min-width: 10rem;
-  min-height: 6rem;
-  max-height: 6rem;
-
-  padding: 1%;
+  
   margin: 1%;
-  font-size: small;
+  min-height: 6rem;
+  padding: 5%;
+  text-align: left;
+  cursor: pointer;
 }
-
 
 
 .col {
@@ -18,20 +15,41 @@
   font-size: medium;
 }
 
-.new-board-button {
-    cursor:pointer;
-}
 
 .customCard > img {
-    width: 30px;
-    height: 30px;
-    margin: auto;
+  width: 30%;
 }
 .board-type {
     margin: 1%;
+    text-align: left;
+}
+/* .customCard > .btn {
+  text-align: center;
+  width: 50px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+} */
+
+.rename-btn {
+  text-align: center;
+  width: 50px;
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  z-index: 2;
 }
 
-@media screen and (max-width: 360px) {
+.delete-btn {
+  text-align: center;
+  width: 50px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
+/* @media screen and (max-width: 360px) {
   .customCard {
     max-width: 9rem;
     min-width: 9rem;
@@ -63,4 +81,4 @@
     .row {
         margin: auto;
       }
-  }
+  } */

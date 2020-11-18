@@ -9,6 +9,16 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Login from "./components/Login/Login";
 import SignUp from "./components/Login/Signup";
 import authServcice from "./Services/auth.servcice";
+import Story from "./components/Story";
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Form,
+  FormControl,
+  Button,
+} from "react-bootstrap";
+import Profile from "./components/Profile/profile";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -28,10 +38,31 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top navbar-expand-lg">
+      <div className="App">
+        <Navbar bg="light" expand="lg" sticky="top">
           <div className="container">
-            <Link className="navbar-brand" to={"/sign-in"}>
+            <Link to="/">
+              <Navbar.Brand>Sprint Retro</Navbar.Brand>
+            </Link>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="ml-auto ">
+                {currentUser ? (
+                  <>
+                    <Link to="/profile" className="nav-link">
+                      Profile
+                    </Link>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </div>
+        </Navbar>
+        {/* <nav className="navbar navbar-expand-lg navbar-light navbar-static-top navbar-expand-lg">
+          <div className="container">
+            <Link className="navbar-brand" to={"/"}>
               Retro
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -67,15 +98,25 @@ function App() {
               </ul>
             </div>
           </div>
-        </nav>
-
+        </nav> */}
 
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={SignUp} />
+          <Route
+            exact
+            path={`/profile`}
+            component={currentUser ? Profile : Login}
+          ></Route>
 
-          <Route exact path="/" component={currentUser ? UserHomepage : Login} />
-
+          <Route
+            exact
+            path="/"
+            component={currentUser ? UserHomepage : Login}
+          />
+          <Route path={`/boards/:id`}>
+            <Story />
+          </Route>
         </Switch>
       </div>
     </Router>
