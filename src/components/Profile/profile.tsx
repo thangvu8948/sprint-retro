@@ -80,10 +80,8 @@ const Profile = () => {
         setFullName(res.Name);
         setDob(res.DOB);
         setIsLoading(false);
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
       });
   }
@@ -162,7 +160,6 @@ const Profile = () => {
                 value={dob}
                 onChange={(e) => {
                   setDob(e.target.value);
-                  console.log(e.target.value);
                 }}
               />
             </Form.Group>
@@ -174,7 +171,6 @@ const Profile = () => {
                 defaultValue={gender}
                 onChange={(e) => {
                   setGender(e.target.value);
-                  console.log(gender);
                 }}
               >
                 <option>Male</option>

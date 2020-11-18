@@ -1,5 +1,5 @@
 import React, { EventHandler, useCallback, useState } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router";
 import { API_URL } from "../../app.const";
 import authServcice from "../../Services/auth.servcice";
@@ -56,12 +56,12 @@ export const NewBoardPopup = (par: { func: Function }) => {
             type="text"
             placeholder="Large text"
           />
-          <Form.Control
-            color="primary"
-            style={{ margin: "1%" }}
-            type="submit"
-            value="Create"
-          />
+            <Button variant="primary mt-3" >
+              Save Changes
+              {isHandling && (
+                <Spinner className=" ml-2 mb-1" animation="border" size="sm" />
+              )}
+            </Button>
         </Form>
       </Modal.Body>
     </>

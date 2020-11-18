@@ -3,17 +3,17 @@ import { API_URL } from "../app.const";
 
 const api_url = `${API_URL}/auth/`;
 
-const register = (username: string, email: string, password: string) => {
-  console.log(username);  
+const register = (username: string, email: string, password: string, dob: string, gender: number) => {
   return axios.post(api_url + "signup", JSON.stringify({
     Name: username,
     Email: email,
     Password: password,
+    DOB: dob,
+    Gender: gender,
   }), { headers: { 'Content-Type': 'application/json', } });
 };
 
 const login =  (email: string, password: string) => {
-  console.log(email + "  " + password)
   return axios
     .post(api_url + "signin", JSON.stringify({
       Email: email,

@@ -1,4 +1,4 @@
-import React, { Component, useRef, useState } from "react";
+import React, { Component, useEffect, useRef, useState } from "react";
 import { propTypes } from "react-bootstrap/esm/Image";
 import { Redirect, useHistory } from "react-router-dom";
 import authServcice from "../../Services/auth.servcice";
@@ -30,18 +30,20 @@ const Login = (props: HistoryProps) => {
     return true;
   };
 
+  useEffect(() => {
+    if(authServcice.getCurrentUser() == null) {
+      props.history.push("/");  
+    }
+  },[])
+
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
     setLoading(true);
 
-    console.log(email);
-    console.log(password);
 
     authServcice.login(email, password).then(
       (response) => {
-        console.log("res: ", response);
-        console.log("token" ,response.token);
         setLoading(false);
         props.history.push("/");
         window.location.reload();
@@ -108,9 +110,7 @@ const Login = (props: HistoryProps) => {
             )}
           </button>
 
-          <p className="forgot-password text-right">
-            Forgot <a href="#">password?</a>
-          </p>
+      
         </form>
       </div>
     </div>

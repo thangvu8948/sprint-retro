@@ -19,6 +19,7 @@ import {
   Button,
 } from "react-bootstrap";
 import Profile from "./components/Profile/profile";
+import NotFound from "./components/Popups/NotFound";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -34,6 +35,7 @@ function App() {
 
   const logOut = () => {
     authServcice.logout();
+    window.location.reload();
   };
 
   return (
@@ -52,9 +54,19 @@ function App() {
                     <Link to="/profile" className="nav-link">
                       Profile
                     </Link>
+                    <Link to="/" className="nav-link" onClick={logOut}>
+                      Logout
+                    </Link>
                   </>
                 ) : (
-                  <></>
+                  <>
+                    <Link to="/login" className="nav-link">
+                      Login
+                    </Link>
+                    <Link to="/register" className="nav-link">
+                      Register
+                    </Link>
+                  </>
                 )}
               </Nav>
             </Navbar.Collapse>
@@ -114,9 +126,13 @@ function App() {
             path="/"
             component={currentUser ? UserHomepage : Login}
           />
-          <Route path={`/boards/:id`}>
-            <Story />
-          </Route>
+          <Route
+            exact
+            path="/boards"
+            component={currentUser ? UserHomepage : Login}
+          />
+          <Route path="/boards/:id" component={currentUser ? Story : Login} />
+          <Route component={NotFound} />
         </Switch>
       </div>
     </Router>

@@ -46,6 +46,7 @@ export const Board = () => {
   async function fetchBoards() {
     setIsLoading(true);
     console.log("fetching " + `${API_URL}/boards`);
+    console.log(user)
     const res = await fetch(`${API_URL}/boards`, {
       method: "GET",
       headers: {
@@ -59,8 +60,8 @@ export const Board = () => {
       .json()
       .then((res) => {
         setBoards(res);
+        console.log(res)
         setIsLoading(false);
-        console.log(`boards: ${boards}`);
       })
       .catch((err) => {
         console.log(err);
@@ -112,7 +113,7 @@ export const Board = () => {
             <div className=" col-lg-3 col-md-4 col-sm-6 col-6 mx-0 my-2">
               <NewBoardCard {...{ func: AddBoardHandler }} />
             </div>
-            {boards.map((board, index) => (
+            {boards && boards.map((board, index) => (
               <div className=" col-lg-3 col-md-4 col-sm-6 col-6 mx-0 my-2">
                 <BoardCard
                   {...{
